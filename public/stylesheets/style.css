@@ -4,4 +4,14 @@ body {
 }
 a {
   color: #00b7ff;
+  text-decoration: none;
+}
+a:hover {
+  color: #ccc;
+}
+ul {
+  padding-left: 0px;
+}
+ul li {
+  list-style: none;
 }

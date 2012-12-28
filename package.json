@@ -10,6 +10,8 @@
     "ejs": "*",
     "stylus": "*",
     "stitch": "~0.3.3",
-    "coffee-script": "~1.4.0"
+    "coffee-script": "~1.4.0",
+    "express-resource": "~1.0.0",
+    "mongoose": "~3.5.3"
   }
 }

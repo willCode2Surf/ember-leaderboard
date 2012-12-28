@@ -1,18 +1,47 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script src="/application.js"></script>
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <script>
-      $(document).ready(function(){
-        App = require('app');
-        app = new App();
-      });
-    </script>
-  </body>
+<head>
+<title><%= title %></title>
+<link rel='stylesheet' href='/stylesheets/style.css' />
+<script src="/application.js"></script>
+</head>
+<body>
+
+<script type="text/x-handlebars" id="application">
+  {{outlet input}}
+  {{outlet users}}
+</script>
+
+<script type="text/x-handlebars" id="input">
+  <p>
+    {{view Ember.TextField valueBinding="view.userName"}}
+    <button {{action createUser target="view"}}>Create User</button>
+  </p>
+</script>
+
+<script type="text/x-handlebars" id="user">
+  {{#if view.isDeleting}}
+    <a href="#" {{action save target="view"}}>save</a> | 
+    <a href="#" {{action undo target="view"}}>cancel</a>
+  {{/if}}
+  <ul>
+    {{#each user in controller}}
+      <li>
+        <a href="#" {{action delete user target="view"}}>x</a> 
+        <a href="#" {{action plusPosition user target="view"}}>+</a> 
+        <a href="#" {{action minusPosition user target="view"}}>-</a> 
+        {{user.name}} {{user.position}}
+      </li>
+    {{/each}}
+  </ul>
+</script>
+
+<script>
+  $(document).ready(function(){
+    App = require('app');
+    App.initialize();
+  });
+</script>
+
+</body>
 </html>

@@ -4,7 +4,9 @@
  */
 
 var express = require('express')
+  , resource = require('express-resource')
   , stitch = require('stitch')
+  , mongoose = require('mongoose')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
@@ -16,8 +18,11 @@ var package = stitch.createPackage({
     __dirname + '/components/jquery/jquery.js',
     __dirname + '/components/handlebars/handlebars-1.0.0-rc.1.js',
     __dirname + '/components/ember/ember.js',
+    __dirname + '/components/ember-data/ember-data.js'
   ]
 });
+
+mongoose.connect('localhost', 'users');
 
 var app = express();
 
@@ -42,7 +47,7 @@ app.configure('development', function(){
 
 app.get('/application.js', package.createServer());
 app.get('/', routes.index);
-app.get('/users', user.list);
+app.resource('users', user);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
