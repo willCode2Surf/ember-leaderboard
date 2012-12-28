@@ -1,5 +1,6 @@
 module.exports = Ember.View.extend
-  templateName: 'input'
+  templateName: 'edit'
+  classNames: ['edit-user']
   userName: null
   createUser: (e) ->
     App.store.createRecord App.User, { name: @get('userName'), position: 1 }

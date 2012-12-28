@@ -1,7 +1,3 @@
-
-/*
- * GET users listing.
- */
 var User = require('../models/user')
 
 exports.index = function(req, res){
@@ -10,11 +6,15 @@ exports.index = function(req, res){
   });
 };
 
+exports.show = function(req, res){
+  User.findById(req.params.user, function(err, user){
+    res.json(200, { "user": user });
+  });
+};
+
 exports.create = function(req, res){
   user = new User(req.body.user);
   user.save(function(err, user) {
-    if (err)
-      console.log(err)
     res.json(200);
   });
 };

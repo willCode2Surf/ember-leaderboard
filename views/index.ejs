@@ -8,28 +8,18 @@
 <body>
 
 <script type="text/x-handlebars" id="application">
-  {{outlet input}}
   {{outlet users}}
+  {{outlet edit}}
 </script>
 
-<script type="text/x-handlebars" id="input">
-  <p>
-    {{view Ember.TextField valueBinding="view.userName"}}
-    <button {{action createUser target="view"}}>Create User</button>
-  </p>
+<script type="text/x-handlebars" id="edit">
+{{name}}
 </script>
 
 <script type="text/x-handlebars" id="user">
-  {{#if view.isDeleting}}
-    <a href="#" {{action save target="view"}}>save</a> | 
-    <a href="#" {{action undo target="view"}}>cancel</a>
-  {{/if}}
   <ul>
     {{#each user in controller}}
-      <li>
-        <a href="#" {{action delete user target="view"}}>x</a> 
-        <a href="#" {{action plusPosition user target="view"}}>+</a> 
-        <a href="#" {{action minusPosition user target="view"}}>-</a> 
+      <li {{action editUser user href=true}}>
         {{user.name}} {{user.position}}
       </li>
     {{/each}}
