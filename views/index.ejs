@@ -9,14 +9,43 @@
 
 <script type="text/x-handlebars" id="application">
   {{outlet users}}
-  {{outlet edit}}
+  {{outlet manage_users}}
 </script>
 
 <script type="text/x-handlebars" id="edit">
-{{name}}
+  <p>Editing User {{name}}</p>
+  <p>
+    {{view Ember.TextField valueBinding="view.userName" placeholder="name"}}
+    <button {{action editUser this target="view"}}>Update</button>
+  </p>
+  <p>
+    Position: 
+    <a href="#" {{action incPosition this target="view"}}>+</a> 
+    <a href="#" {{action decPosition this target="view"}}>-</a> 
+    {{#if view.isEditing}}
+      <a href="#" {{action save this target="view"}}>Save</a> 
+      <a href="#" {{action cancel this target="view"}}>Cancel</a> 
+    {{/if}}
+  </p>
+
+   <p>
+     <button {{action exit target="view"}}>Exit</button>
+   </p>
+</script>
+
+<script type="text/x-handlebars" id="new">
+  <p>
+    Enter name: {{view Ember.TextField valueBinding="view.userName" placeholder="name"}}
+  </p>
+  <p>
+    Enter position: {{view Ember.TextField valueBinding="view.position" placeholder="position"}}
+  </p>
+   <button {{action newUser target="view"}}>Create</button> 
+   <button {{action cancel target="view"}}>Cancel</button>
 </script>
 
 <script type="text/x-handlebars" id="user">
+  <p><a href="#" {{action newUser}}>New User</a></p>
   <ul>
     {{#each user in controller}}
       <li {{action editUser user href=true}}>

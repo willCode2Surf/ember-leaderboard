@@ -1,7 +1,11 @@
 mongoose = require 'mongoose'
 
+Images = mongoose.Schema
+  url: 'string'
+
 schema = mongoose.Schema
   name: 'string'
+  images: [Images]
   position:
     type: 'number'
     required: true

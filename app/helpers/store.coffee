@@ -1,5 +1,5 @@
 module.exports = DS.Store.create
-  revision: 10
+  revision: 11
   adapter: DS.RESTAdapter.create
     ajax: (url, type, hash) ->
       hash.url = url

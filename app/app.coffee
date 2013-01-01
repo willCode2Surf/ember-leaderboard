@@ -9,13 +9,18 @@ App = Ember.Application.create
   EditView: require 'views/edit_view'
   EditController: require 'controllers/edit_controller'
 
+  NewView: require 'views/new_view'
+  NewController: require 'controllers/new_controller'
+
   UserView: require 'views/user_view'
   UserController: require 'controllers/user_controller'
 
   Router: Ember.Router.extend
     enableLogging: true
 
+    home: Ember.Route.transitionTo 'root.index'
     editUser: Ember.Route.transitionTo 'root.users.edit'
+    newUser: Ember.Route.transitionTo 'root.users.new'
 
     root: Ember.Route.extend
 
@@ -37,11 +42,21 @@ App = Ember.Application.create
             users = App.store.findAll App.User
             router.get('applicationController').connectOutlet 'users', 'user', users
 
+        new: Ember.Route.extend
+          route: '/new'
+
+          exit: (router) ->
+            console.log 'exiting'
+            router.get('applicationController').disconnectOutlet 'manage_users'
+
+          connectOutlets: (router) ->
+            router.get('applicationController').connectOutlet 'manage_users', 'new'
+
         edit: Ember.Route.extend
           route: '/:id/edit'
 
           exit: (router) ->
-            router.get('applicationController').disconnectOutlet 'edit'
+            router.get('applicationController').disconnectOutlet 'manage_users'
 
           deserialize: (router, user) ->
             App.store.find App.User, user.id
@@ -50,7 +65,7 @@ App = Ember.Application.create
             { id: user.id }
 
           connectOutlets: (router, user) ->
-            router.get('applicationController').connectOutlet 'edit', 'edit', user
+            router.get('applicationController').connectOutlet 'manage_users', 'edit', user
 
 
 require('models')(App)
